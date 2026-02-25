@@ -50,6 +50,13 @@ const TaskItem = ({ task, provided, onEdit }) => {
     return date.toLocaleDateString();
   };
 
+  // Format created date
+  const formatCreatedDate = (timestamp) => {
+    if (!timestamp) return null;
+    const date = new Date(timestamp);
+    return date.toLocaleDateString();
+  };
+
   const isOverdue = task.dueDate && task.dueDate < Date.now() && !task.completed;
   const dueDateString = formatDueDate(task.dueDate);
 
@@ -74,6 +81,11 @@ const TaskItem = ({ task, provided, onEdit }) => {
         <span className="task-text">{task.text}</span>
         {task.description && (
           <span className="task-description">{task.description}</span>
+        )}
+        {formatCreatedDate(task.createdAt) && (
+          <span className="task-created-date">
+            📅 Created: {formatCreatedDate(task.createdAt)}
+          </span>
         )}
         {dueDateString && (
           <span className={`task-due-date ${isOverdue ? "overdue" : ""}`}>

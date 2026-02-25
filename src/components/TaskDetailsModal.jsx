@@ -19,8 +19,28 @@ const TaskDetailsModal = ({ mode = "edit", taskId, isOpen, onClose }) => {
   const [isCompleted, setIsCompleted] = useState(false);
   const [createdDate, setCreatedDate] = useState("");
 
+  // Track original values for edit mode
+  const [originalTitle, setOriginalTitle] = useState("");
+  const [originalDescription, setOriginalDescription] = useState("");
+  const [originalDueDate, setOriginalDueDate] = useState("");
+  const [originalCategories, setOriginalCategories] = useState([]);
+  const [originalCompleted, setOriginalCompleted] = useState(false);
+
   // Validation flag - Title is mandatory
   const isValid = title.trim().length > 0;
+
+  // Check if anything changed in edit mode
+  const hasChanges = mode === "edit" && (
+    title !== originalTitle ||
+    description !== originalDescription ||
+    dueDate !== originalDueDate ||
+    selectedCategories.length !== originalCategories.length ||
+    !selectedCategories.every(cat => originalCategories.includes(cat)) ||
+    isCompleted !== originalCompleted
+  );
+
+  // Button should be enabled if valid AND (creating new or editing with changes)
+  const isButtonEnabled = isValid && (mode === "create" || hasChanges);
 
   // Initialize from task for edit mode, or reset for create mode
   useEffect(() => {
@@ -37,25 +57,36 @@ const TaskDetailsModal = ({ mode = "edit", taskId, isOpen, onClose }) => {
       setNotificationType("both");
     } else if (mode === "edit" && task && isOpen) {
       // Initialize from task for editing
-      setTitle(task.text);
-      setDescription(task.description || "");
-      setDueDate(
-        task.dueDate
-          ? new Date(task.dueDate).toISOString().split("T")[0]
-          : ""
-      );
+      const taskTitle = task.text;
+      const taskDesc = task.description || "";
+      const taskDueDate = task.dueDate
+        ? new Date(task.dueDate).toISOString().split("T")[0]
+        : "";
+      const taskCategories = task.categories || [];
+      const taskCompleted = task.completed || false;
+
+      setTitle(taskTitle);
+      setDescription(taskDesc);
+      setDueDate(taskDueDate);
       setCreatedDate(
         task.createdAt
           ? new Date(task.createdAt).toISOString().split("T")[0]
           : ""
       );
-      setSelectedCategories(task.categories || []);
-      setIsCompleted(task.completed || false);
+      setSelectedCategories(taskCategories);
+      setIsCompleted(taskCompleted);
       setReminderEnabled(task.reminder?.enabled || false);
       setReminderMinutes(
         (task.reminder?.notifyBefore || 15 * 60 * 1000) / (60 * 1000)
       );
       setNotificationType(task.reminder?.notificationType || "both");
+
+      // Store original values to track changes
+      setOriginalTitle(taskTitle);
+      setOriginalDescription(taskDesc);
+      setOriginalDueDate(taskDueDate);
+      setOriginalCategories(taskCategories);
+      setOriginalCompleted(taskCompleted);
     }
   }, [mode, task, isOpen]);
 
@@ -74,6 +105,7 @@ const TaskDetailsModal = ({ mode = "edit", taskId, isOpen, onClose }) => {
         description,
         categories: selectedCategories,
         completed: isCompleted,
+        createdAt: new Date().getTime(), // Add creation timestamp
       };
 
       if (dueDate) {
@@ -204,7 +236,6 @@ const TaskDetailsModal = ({ mode = "edit", taskId, isOpen, onClose }) => {
           <div className="form-group">
             <label htmlFor="taskTitle">
               Title <span style={{color: 'var(--danger)'}}>*</span>
-              <span style={{fontSize: '0.75rem', marginLeft: '4px', color: 'var(--muted)'}}>Required</span>
             </label>
             <input
               id="taskTitle"
@@ -212,15 +243,7 @@ const TaskDetailsModal = ({ mode = "edit", taskId, isOpen, onClose }) => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Enter task title..."
-              style={{
-                borderColor: !title.trim() ? 'rgba(239, 68, 68, 0.3)' : 'rgba(37, 99, 235, 0.15)',
-              }}
             />
-            {!title.trim() && (
-              <span style={{fontSize: '0.8rem', color: 'var(--danger)', marginTop: '4px', display: 'block'}}>
-                This field is required
-              </span>
-            )}
           </div>
 
           {/* Created Date - Read-only */}
@@ -237,11 +260,6 @@ const TaskDetailsModal = ({ mode = "edit", taskId, isOpen, onClose }) => {
                 backgroundColor: 'rgba(37, 99, 235, 0.05)',
               }}
             />
-            <span style={{fontSize: '0.8rem', color: 'var(--muted)', marginTop: '4px', display: 'block'}}>
-              {mode === "create"
-                ? "Today's date - task creation date"
-                : "Auto-generated when task was created"}
-            </span>
           </div>
 
           {/* Status */}
@@ -257,12 +275,9 @@ const TaskDetailsModal = ({ mode = "edit", taskId, isOpen, onClose }) => {
             </label>
           </div>
 
-          {/* Description - Optional */}
+          {/* Description */}
           <div className="form-group">
-            <label htmlFor="description">
-              Description
-              <span style={{fontSize: '0.75rem', marginLeft: '4px', color: 'var(--muted)'}}>Optional</span>
-            </label>
+            <label htmlFor="description">Description</label>
             <textarea
               id="description"
               value={description}
@@ -272,12 +287,9 @@ const TaskDetailsModal = ({ mode = "edit", taskId, isOpen, onClose }) => {
             />
           </div>
 
-          {/* Due Date - Optional */}
+          {/* Due Date */}
           <div className="form-group">
-            <label htmlFor="dueDate">
-              Due Date
-              <span style={{fontSize: '0.75rem', marginLeft: '4px', color: 'var(--muted)'}}>Optional</span>
-            </label>
+            <label htmlFor="dueDate">Due Date</label>
             <input
               id="dueDate"
               type="date"
@@ -335,12 +347,9 @@ const TaskDetailsModal = ({ mode = "edit", taskId, isOpen, onClose }) => {
             </div>
           )}
 
-          {/* Categories - Optional */}
+          {/* Categories */}
           <div className="form-group">
-            <label>
-              Categories
-              <span style={{fontSize: '0.75rem', marginLeft: '4px', color: 'var(--muted)'}}>Optional</span>
-            </label>
+            <label>Categories</label>
             <div className="categories-select">
               {allCategories.length === 0 ? (
                 <p className="empty-message">No categories available</p>
@@ -371,11 +380,11 @@ const TaskDetailsModal = ({ mode = "edit", taskId, isOpen, onClose }) => {
           <button
             className="btn btn-primary"
             onClick={handleSave}
-            disabled={!isValid}
-            title={!isValid ? "Please fill in the required fields (Title)" : ""}
+            disabled={!isButtonEnabled}
+            title={mode === "edit" && !hasChanges && isValid ? "Make changes to enable save" : ""}
             style={{
-              opacity: !isValid ? 0.5 : 1,
-              cursor: !isValid ? 'not-allowed' : 'pointer',
+              opacity: !isButtonEnabled ? 0.5 : 1,
+              cursor: !isButtonEnabled ? 'not-allowed' : 'pointer',
             }}
           >
             {submitButtonText}
