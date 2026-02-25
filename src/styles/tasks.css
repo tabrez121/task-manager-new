@@ -1,0 +1,844 @@
+/* ============================================================================
+   TASK INPUT BUTTON
+   ============================================================================ */
+
+.task-input-button {
+  padding: 12px 20px;
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base);
+}
+
+.task-input-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  filter: brightness(1.08);
+}
+
+.task-input-button:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-md);
+}
+
+/* ============================================================================
+   FILTER BUTTONS
+   ============================================================================ */
+
+.filters {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filters button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 2px solid rgba(37, 99, 235, 0.2);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all var(--transition-base);
+}
+
+.filters button:hover {
+  border-color: var(--accent);
+  background: rgba(37, 99, 235, 0.05);
+}
+
+.filters button.active {
+  background: var(--gradient-primary);
+  color: white;
+  border-color: transparent;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ============================================================================
+   TASK LIST & ITEMS
+   ============================================================================ */
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--card);
+  padding: 14px 16px;
+  border-radius: 10px;
+  box-shadow: var(--shadow-sm);
+  border-left: 4px solid transparent;
+  transition: all var(--transition-base);
+  overflow: hidden;
+}
+
+.task-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-left-color: var(--accent);
+}
+
+.task-item.completed {
+  opacity: 0.6;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+.task-item.dragging {
+  box-shadow: var(--shadow-xl);
+  transform: rotate(1deg) scale(1.02);
+  z-index: 999;
+}
+
+.task-item.adding {
+  animation: taskAdd 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes taskAdd {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-1px) scale(1.02);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+.task-item.removing {
+  animation: taskRemove 0.3s ease forwards;
+}
+
+@keyframes taskRemove {
+  0% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    max-height: 70px;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-16px) scale(0.95);
+    max-height: 0;
+  }
+}
+
+.task-item.overdue {
+  border-left-color: var(--danger);
+  background: rgba(239, 68, 68, 0.08);
+}
+
+/* Task Content */
+.task-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-right: 12px;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--accent);
+  margin-right: 12px;
+  border-radius: 4px;
+  transition: all var(--transition-fast);
+}
+
+.task-checkbox:hover {
+  filter: brightness(1.1);
+}
+
+.task-text {
+  flex: 1;
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--text);
+  cursor: pointer;
+  user-select: none;
+}
+
+.task-description {
+  font-size: 0.85rem;
+  color: var(--muted);
+  opacity: 0.85;
+}
+
+.task-due-date {
+  font-size: 0.8rem;
+  color: var(--accent);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.task-due-date.overdue {
+  color: var(--danger);
+}
+
+.task-categories {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.category-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(37, 99, 235, 0.15);
+  color: var(--accent);
+  transition: all var(--transition-fast);
+}
+
+.category-badge:hover {
+  background: rgba(37, 99, 235, 0.25);
+  transform: scale(1.05);
+}
+
+/* Task Buttons */
+.edit,
+.delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 18px;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit {
+  color: var(--accent);
+}
+
+.edit:hover {
+  background: rgba(37, 99, 235, 0.1);
+  transform: scale(1.15);
+}
+
+.edit:active {
+  transform: scale(0.95);
+}
+
+.delete {
+  color: var(--danger);
+  margin-left: 4px;
+}
+
+.delete:hover {
+  background: rgba(239, 68, 68, 0.1);
+  transform: scale(1.15);
+}
+
+.delete:active {
+  transform: scale(0.95);
+}
+
+/* ============================================================================
+   SEARCH BAR
+   ============================================================================ */
+
+.search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 2px solid rgba(37, 99, 235, 0.15);
+  background: var(--card);
+  color: var(--text);
+  font-size: 0.95rem;
+  outline: none;
+  transition: all var(--transition-base);
+}
+
+.search-input::placeholder {
+  color: var(--muted);
+}
+
+.search-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  transform: translateY(-1px);
+}
+
+.search-clear {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 6px;
+  border-radius: 4px;
+  transition: all var(--transition-fast);
+}
+
+.search-clear:hover {
+  color: var(--text);
+  background: rgba(37, 99, 235, 0.08);
+}
+
+/* ============================================================================
+   MODAL STYLES (Modern Glass-morphism)
+   ============================================================================ */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn var(--transition-slow) ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(4px);
+  }
+}
+
+.modal-content {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 28px;
+  max-width: 500px;
+  width: 90vw;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-2xl);
+  border: 1px solid rgba(37, 99, 235, 0.1);
+  animation: slideUp var(--transition-slow) ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid rgba(37, 99, 235, 0.1);
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 28px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.modal-close:hover {
+  color: var(--danger);
+  background: rgba(239, 68, 68, 0.1);
+  transform: rotate(90deg);
+}
+
+/* Modal Body */
+.modal-body {
+  margin-bottom: 24px;
+}
+
+/* Modal Footer */
+.modal-footer {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  border-top: 2px solid rgba(37, 99, 235, 0.1);
+  padding-top: 20px;
+}
+
+.modal-footer .btn {
+  flex: 1;
+}
+
+/* ============================================================================
+   FORM STYLES
+   ============================================================================ */
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--text);
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 11px 14px;
+  border: 2px solid rgba(37, 99, 235, 0.15);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  transition: all var(--transition-base);
+}
+
+.form-group input[type="text"]::placeholder,
+.form-group input[type="date"]::placeholder,
+.form-group textarea::placeholder,
+.form-group select {
+  color: var(--muted);
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="date"]:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+  transform: translateY(-1px);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 90px;
+  line-height: 1.5;
+}
+
+/* Form Row */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* Checkbox Styling */
+.form-group label[for*="checkbox"] {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.form-group input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--accent);
+  border-radius: 4px;
+  transition: all var(--transition-fast);
+}
+
+.form-group input[type="checkbox"]:hover {
+  filter: brightness(1.1);
+}
+
+/* Reminder Settings */
+.reminder-settings {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(37, 99, 235, 0.04));
+  padding: 14px;
+  border-radius: 8px;
+  border-left: 4px solid var(--accent);
+  margin-top: 12px;
+  transition: all var(--transition-base);
+}
+
+/* ============================================================================
+   BUTTON STYLES (Enhanced)
+   ============================================================================ */
+
+.btn {
+  padding: 11px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all var(--transition-base);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--gradient-primary);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.btn-secondary {
+  background: rgba(37, 99, 235, 0.12);
+  color: var(--accent);
+  border: 2px solid var(--accent);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--accent);
+  color: white;
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: white;
+}
+
+.btn-danger:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.btn-success {
+  background: var(--success);
+  color: white;
+}
+
+.btn-small {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
+/* ============================================================================
+   CATEGORY MANAGER
+   ============================================================================ */
+
+.add-category-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid rgba(37, 99, 235, 0.1);
+}
+
+.category-input {
+  padding: 10px 12px;
+  border: 2px solid rgba(37, 99, 235, 0.15);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text);
+  font-size: 0.95rem;
+  outline: none;
+  transition: all var(--transition-base);
+}
+
+.category-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.color-picker {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.color-option {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.color-option:hover {
+  transform: scale(1.15);
+  box-shadow: var(--shadow-md);
+}
+
+.color-option.selected {
+  border-color: var(--text);
+  box-shadow: var(--shadow-lg), inset 0 0 0 3px var(--card);
+}
+
+.categories-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.category-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(37, 99, 235, 0.08);
+  border-radius: 8px;
+  border-left: 4px solid transparent;
+  transition: all var(--transition-base);
+}
+
+.category-item:hover {
+  background: rgba(37, 99, 235, 0.12);
+  transform: translateX(4px);
+}
+
+.category-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.category-name {
+  flex: 1;
+  color: var(--text);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.category-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.categories-select {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.category-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 6px;
+  background: rgba(37, 99, 235, 0.08);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.category-checkbox:hover {
+  background: rgba(37, 99, 235, 0.15);
+  transform: translateX(2px);
+}
+
+.category-checkbox input[type="checkbox"] {
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.category-checkbox .category-color {
+  width: 16px;
+  height: 16px;
+}
+
+/* ============================================================================
+   EMPTY STATE
+   ============================================================================ */
+
+.empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--muted);
+  font-size: 1rem;
+  animation: fadeIn var(--transition-slow) ease-out;
+}
+
+.empty::before {
+  content: "✨";
+  display: block;
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+.empty-message {
+  text-align: center;
+  padding: 20px;
+  color: var(--muted);
+  opacity: 0.75;
+  font-size: 0.95rem;
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 640px) {
+  .modal-content {
+    width: 95vw;
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .modal-header {
+    margin-bottom: 18px;
+  }
+
+  .modal-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+
+  .modal-footer button {
+    width: 100%;
+  }
+
+  .task-item {
+    padding: 12px;
+  }
+
+  .empty {
+    padding: 40px 16px;
+  }
+
+  .empty::before {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+  }
+
+  .color-picker {
+    gap: 8px;
+  }
+
+  .color-option {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* Dark Mode Specific Enhancements */
+body[data-theme="dark"] .modal-content {
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+body[data-theme="dark"] .form-group input[type="text"],
+body[data-theme="dark"] .form-group input[type="date"],
+body[data-theme="dark"] .form-group textarea,
+body[data-theme="dark"] .form-group select {
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+body[data-theme="dark"] .reminder-settings {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(59, 130, 246, 0.06));
+}
+
+body[data-theme="dark"] .task-item:hover {
+  border-left-color: var(--accent);
+}
+
+body[data-theme="dark"] .category-item {
+  background: rgba(59, 130, 246, 0.12);
+}
+
+body[data-theme="dark"] .category-checkbox {
+  background: rgba(59, 130, 246, 0.12);
+}
