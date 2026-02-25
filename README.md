@@ -1,7 +1,7 @@
-# 📝 Task Manager – React Project  
-A modern, beautiful, and fully responsive **Task Manager Application** built using **React**, **Context API**, **Custom Hooks**, and **@hello-pangea/dnd** for drag-and-drop functionality.
+# 📝 Task Manager – React Project
+A modern, beautiful, and fully responsive **Task Manager Application** built using **React**, **Redux Toolkit**, **@hello-pangea/dnd** for drag-and-drop functionality, and advanced features like task scheduling, reminders, categories, and search.
 
-This project covers all required assignment features and includes additional enhancements such as toast notifications, animations, task selection, and theme toggling.
+This project implements a complete task management system with all required features and comprehensive enhancements including due dates, reminders, categories, descriptions, and advanced filtering.
 
 ---
 
@@ -14,165 +14,297 @@ This project covers all required assignment features and includes additional enh
 <img width="866" height="359" alt="homepage dark" src="https://github.com/user-attachments/assets/25b89eda-2bb3-440f-a06f-566ae24e971f" />
 
 
-### 📝 Adding Tasks
-<img width="854" height="362" alt="add task" src="https://github.com/user-attachments/assets/d8ac2dc0-c65e-4025-98d4-a23d764be2c7" />
+### 📝 Create Task Modal (Full Details)
+Modal form includes: Title, Description, Created Date, Status, Due Date, Categories, and Reminders
 
+### ✔️ Task List with Full Details
+Tasks now display: Title, Description, Created Date, Due Date, and Category Badges
 
-### ✔️ Completed Task View  
-<img width="800" height="349" alt="select task" src="https://github.com/user-attachments/assets/df098969-cd4f-46df-bf1e-ce12bfc51195" />
+### 🔍 Search & Filter Options
+- Search by title and description
+- Filter by All / Completed / Pending
+- Filter by Categories
 
+### ↕️ Drag & Drop Reordering
+Smooth drag-and-drop with @hello-pangea/dnd
 
-### 🔍 Filter Options – All / Completed / Pending
-<img width="665" height="316" alt="complete filter task" src="https://github.com/user-attachments/assets/6f43297b-ef39-4057-a631-96feab4e3d81" />
+### 🏷️ Categories Management
+Organize tasks with color-coded categories
 
-<img width="679" height="265" alt="pending filter task" src="https://github.com/user-attachments/assets/2c59b4a8-8371-4e89-9b08-26c6b72fccf1" />
+### 🔔 Reminder Notifications
+Due date reminders with toast and browser notifications
 
-
-### ↕️ Drag & Drop Reordering (Hello Pangea DnD)
-<img width="638" height="284" alt="drag" src="https://github.com/user-attachments/assets/10791b1c-7b5a-4ac0-931f-bc87184cfa33" />
-
-
-### 🗑 Deleting a Task (with animation)
-<img width="791" height="283" alt="delete task" src="https://github.com/user-attachments/assets/22da7176-ba37-40d2-abf4-8dd7e5e7e115" />
-
-
-### ✨ Task Seleted
-<img width="619" height="313" alt="task selection 1" src="https://github.com/user-attachments/assets/0d6d7e50-82ae-4e9d-9853-dd6776c4f514" />
-
-
-### ✨ Toast Notifications 
-<img width="278" height="83" alt="toast task created" src="https://github.com/user-attachments/assets/eaaebffc-42cf-42a4-b365-9173e7c087cb" />
-<img width="263" height="68" alt="toast task completed" src="https://github.com/user-attachments/assets/06e2ad27-58d6-4b98-82d4-052f1d221999" />
-<img width="254" height="66" alt="toast task deletd" src="https://github.com/user-attachments/assets/d3fe7780-bcfa-4da6-a16c-f068005614c3" />
-
-
+---
 
 ## 🚀 Features
 
-### ✅ **Basic Functionality**
-- ➕ **Add Tasks** (with input validation)
-- ✔️ **Mark Tasks as Completed** (checkbox UI)
+### ✅ **Core Task Management**
+- ➕ **Create Tasks** with modal form (Title, Description, Categories, Due Date)
+- ✔️ **Mark Tasks as Completed** (with status tracking)
 - 🗑 **Delete Tasks** (with animation)
-- 🔍 **Filter Tasks**  
-  - **All**
-  - **Completed**
-  - **Pending**
-- 💾 **Persistent Storage** using Local Storage
+- ✏️ **Edit Tasks** (all fields editable)
+- 💾 **Persistent Storage** using Redux with localStorage sync
+
+### 📅 **Due Dates & Scheduling**
+- 📅 **Set Due Dates** for tasks
+- 🕐 **Track Created Date** automatically
+- ⏰ **Reminders** configurable (5 min, 15 min, 30 min, 1 hour, 1 day)
+- 🔴 **Overdue Indicator** with red highlighting
+- 📍 **Smart Date Display** (Today, Tomorrow, or date format)
+
+### 🔔 **Notifications & Reminders**
+- 🔊 **Browser Notifications** when due date approaches
+- 🍞 **Toast Notifications** for all actions
+- ⚙️ **Configurable Notification Types** (Browser only, Toast only, or Both)
+
+### 🏷️ **Categories & Tags**
+- 🎨 **Create Color-Coded Categories**
+- 🏷️ **Assign Multiple Categories** to tasks
+- 🔍 **Filter Tasks by Category**
+- 🎯 **Category Management Panel** (Add, Edit, Delete)
+
+### 🔍 **Search & Filtering**
+- 🔎 **Full-Text Search** across task titles and descriptions
+- 🔽 **Status Filters** (All / Completed / Pending)
+- 📂 **Category Filters** (filter by single or multiple categories)
+- ⚡ **Real-Time Search** with live results
 
 ---
 
 ## ⚛️ **React Concepts Implemented**
 
-### 🔧 **Custom Hook – `useLocalStorage()`**
-A fully reusable hook for:
-- Saving tasks to localStorage  
-- Restoring tasks on refresh  
-- Auto-sync with state
+### 🏪 **Redux Toolkit State Management**
+Complete Redux migration with:
+- **Normalized State** for optimal performance
+- **Slices**: `tasksSlice`, `filtersSlice`, `categoriesSlice`
+- **Selectors** with Reselect for memoization
+- **Middleware**: Custom persistence & reminder middleware
+- **DevTools Integration** for debugging
 
-### 🧠 **Context API**
-Manages global state for:
-- Tasks  
-- Filters  
-- Selection  
-- Drag-and-drop order  
-- All CRUD operations  
-
-No prop-drilling!
+### 🎯 **Memoized Selectors**
+- `selectAllTasks()` – Get all tasks
+- `selectFilteredTasks()` – Apply status filter
+- `selectSearchResults()` – Fuzzy search matching
+- `selectFilteredAndSearchedTasks()` – Combined filtering
+- `selectTasksByCategory()` – Filter by category
+- `selectUpcomingReminders()` – Get tasks needing reminders
 
 ### ⚡ **Performance Optimization**
-- `React.memo` → Prevents unnecessary re-renders  
-- `useCallback` → Optimizes event handlers  
-- `useMemo` → Optimizes computed filtered tasks  
-- Context partitioning → Efficient updates  
+- `React.memo` – Prevents unnecessary re-renders
+- `useCallback` – Optimized event handlers
+- Reselect – Memoized selectors prevent recalculations
+- Normalized Redux state – O(1) task lookups
+
+### 🔄 **Custom Middleware**
+- **Persistence Middleware** – Throttled localStorage sync (1000ms debounce)
+- **Reminder Middleware** – Checks reminders every 30 seconds
 
 ---
 
 ## 🎨 **UI & CSS Features**
 
 ### ☀️🌙 **Dark Mode / Light Mode**
-- Theme toggle button  
-- Colors handled with CSS variables  
-- Fully responsive to theme changes
+- Theme toggle button in top-right corner
+- All colors via CSS variables
+- Enhanced dark mode: Due dates have highlighted background for visibility
+- Smooth transitions between themes
 
 ### ✨ **Animations**
-Includes smooth, modern animations for:
-- Task adding  
-- Task removing  
-- Hover elevation  
-- Dragging shadow + rotation  
-- Empty state fade animation  
-- Selected task highlight  
+- Task adding with scale and fade-in
+- Task removal with slide-out animation
+- Hover elevation effects
+- Dragging shadow + rotation effects
+- Modal fade and slide-up animations
+- Empty state fade animation
+
+### 📖 **Comprehensive Task Display**
+- **Title** (primary task name)
+- **Description** (optional detailed notes)
+- **Created Date** (auto-generated, read-only)
+- **Due Date** (with calendar icon)
+- **Category Badges** (color-coded)
+- **Completion Status** (checkmark)
 
 ### 📱 **Responsive Design**
-- Mobile-first  
-- Fully responsive task layout  
-- Touch-friendly drag-and-drop  
+- Mobile-first approach
+- Fully responsive task layout
+- Touch-friendly drag-and-drop
+- Modal responsive on small screens
+- Optimized for all screen sizes
 
 ---
 
 ## 🧲 **Drag and Drop – @hello-pangea/dnd**
-- Drag tasks to reorder  
-- Smooth animation  
-- Stable React 19 compatibility  
-- Works with filters & context  
-- Styled drag shadow + scale effect  
-
-----
-
-## 🔔 **Toast Notifications**
-Using **react-toastify**:
-- Task added  
-- Task deleted  
-- Task completed  
-- Task selected  
+- Drag tasks to reorder within list
+- Smooth animation during drag
+- Stable React 19 compatibility
+- Works with all filters applied
+- Visual feedback (shadow + scale)
 
 ---
 
-## 🖼 **Task Selection Feature**
-- Click task → highlights it  
-- Selected style works in both themes  
-- Does not interfere with completed tasks  
-- Great UX improvement  
+## 🛠️ **Task Fields & Data Structure**
+
+Each task contains:
+```javascript
+{
+  id: string,                    // Unique identifier
+  text: string,                  // Task title (required)
+  description: string,           // Optional task details
+  completed: boolean,            // Completion status
+  completedAt: timestamp,        // When completed
+  createdAt: timestamp,          // When task was created
+  dueDate: timestamp,            // Optional due date
+  categories: string[],          // Array of category IDs
+  reminder: {
+    enabled: boolean,            // Reminder active?
+    notifyBefore: number,        // Milliseconds before due date
+    notificationType: string,    // 'toast' | 'browser' | 'both'
+    sentAt: timestamp           // When reminder was sent
+  }
+}
+```
+
+---
+
+## 📖 **Form Validation & UX**
+
+### Create Task Modal
+- ✅ **Title** (required, marked with *)
+- ✅ **Description** (optional)
+- ✅ **Created Date** (auto-filled, read-only)
+- ✅ **Status** (Mark as Completed checkbox)
+- ✅ **Due Date** (optional date picker)
+- ✅ **Categories** (multi-select with colors)
+- ✅ **Reminders** (enable/disable with options)
+
+### Smart Button State
+- **Create Mode**: Button enabled when title is filled
+- **Edit Mode**: Button only enabled when changes detected
+- Call-to-action text: "Create Task" or "Save Changes"
+- Tooltip guidance for users
 
 ---
 
 ## 📂 **Project Structure**
 
+```
 src/
-│── components/
-│ ├── TaskInput.jsx
-│ ├── TaskList.jsx
-│ ├── TaskItem.jsx
-│ ├── SortableTask.jsx (if used)
-│
-│── context/
-│ └── TaskContext.jsx
-│
-│── hooks/
-│ └── useLocalStorage.js
-│
-│── styles/
-│ ├── tasks.css
-│ ├── theme.css
-│
-│── App.js
-│── index.js
-
+├── store/
+│   ├── store.js
+│   ├── slices/
+│   │   ├── tasksSlice.js
+│   │   ├── filtersSlice.js
+│   │   └── categoriesSlice.js
+│   ├── middleware/
+│   │   ├── persistenceMiddleware.js
+│   │   └── reminderMiddleware.js
+│   └── selectors/
+│       └── index.js
+├── components/
+│   ├── TaskInput.jsx
+│   ├── TaskList.jsx
+│   ├── TaskItem.jsx
+│   ├── TaskDetailsModal.jsx
+│   ├── SearchBar.jsx
+│   ├── FilterButtons.jsx
+│   ├── CategoryManager.jsx
+│   └── ThemeToggle.jsx
+├── styles/
+│   ├── theme.css
+│   ├── app.css
+│   └── tasks.css
+├── App.js
+└── index.js
+```
 
 ---
 
 ## 🛠️ **Technologies Used**
-- **React 19**
-- **Context API**
-- **Custom Hooks**
-- **@hello-pangea/dnd** (Drag and Drop)
-- **React Toastify**
-- **CSS3 Animations**
-- **Local Storage API**
+- **React 19** – UI library
+- **Redux Toolkit** – State management (with Thunk middleware)
+- **react-redux** – React bindings for Redux
+- **Reselect** – Memoized selectors
+- **@hello-pangea/dnd** – Drag and drop
+- **React Toastify** – Toast notifications
+- **Fuse.js** – Fuzzy search (if used)
+- **date-fns** – Date formatting utilities
+- **CSS3** – Animations & styling
+- **Local Storage API** – Persistence
 
 ---
 
 ## 📦 **Installation & Setup**
 
+```bash
+# Install dependencies
 npm install
+
+# Start development server
 npm start
+
+# Build for production
+npm run build
+```
+
+---
+
+## 🔑 **Key Implementation Details**
+
+### Redux Store Setup
+```
+State: {
+  tasks: {
+    byId: { taskId: taskObject },
+    allIds: [taskId1, taskId2, ...]
+  },
+  filters: { status, search, category },
+  categories: { byId, allIds }
+}
+```
+
+### Persistence Strategy
+- Tasks and categories auto-saved to localStorage
+- Throttled to prevent excessive writes
+- Version migrations supported for future schema changes
+
+### Reminder System
+- Middleware checks every 30 seconds
+- Triggers browser notifications if permission granted
+- Toast notifications always shown
+- Gracefully handles no browser notification support
+
+### Search Implementation
+- Real-time as-you-type searching
+- Searches across title and description
+- Instant feedback with result count
+- Clear button to reset search
+
+---
+
+## ✨ **Recent Enhancements**
+
+### Version 2.0 – Redux Migration & Features
+- ✅ Migrated from Context API to Redux Toolkit
+- ✅ Added modal-based task creation
+- ✅ Implemented due dates and reminders
+- ✅ Added categories/tags system
+- ✅ Built search functionality
+- ✅ Enhanced dark mode visibility
+- ✅ Added task descriptions
+- ✅ Tracking of creation dates
+- ✅ Comprehensive form validation
+- ✅ Smart button state management
+
+---
+
+## 🎯 **Browser Support**
+- Chrome/Edge 90+
+- Firefox 88+
+- Safari 14+
+- Mobile browsers (iOS Safari, Chrome Mobile)
+
+---
+
+## 📄 **License**
+Open source project for educational purposes.
