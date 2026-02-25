@@ -2,7 +2,6 @@ import { toast } from 'react-toastify';
 import { markReminderSent } from '../slices/tasksSlice';
 
 const reminderMiddleware = (storeAPI) => {
-  // Check reminders every 30 seconds
   let checkInterval;
 
   const checkReminders = () => {
@@ -38,7 +37,7 @@ const reminderMiddleware = (storeAPI) => {
   };
 
   const sendReminder = (task, storeAPI) => {
-    const notificationType = task.reminder.notificationType; // 'browser', 'toast', or 'both'
+    const notificationType = task.reminder.notificationType; 
 
     // Toast notification
     if (notificationType === 'toast' || notificationType === 'both') {

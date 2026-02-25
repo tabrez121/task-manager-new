@@ -8,7 +8,6 @@ import CategoryManager from "./components/CategoryManager";
 import TaskDetailsModal from "./components/TaskDetailsModal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import "./styles/theme.css";
 import "./styles/app.css";
 import "./styles/tasks.css";

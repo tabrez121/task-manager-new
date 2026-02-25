@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  byId: {}, // Normalized: { [taskId]: { ...task } }
-  allIds: [], // Ordered task IDs for rendering
+  byId: {}, 
+  allIds: [], 
 };
 
 const tasksSlice = createSlice({

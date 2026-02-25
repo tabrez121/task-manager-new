@@ -13,7 +13,7 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false, // Allow timestamps and other non-serializable values
+      serializableCheck: false, 
     })
       .concat(persistenceMiddleware)
       .concat(reminderMiddleware),

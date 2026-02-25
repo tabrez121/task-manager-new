@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  byId: {}, // Normalized: { [categoryId]: { id, name, color, icon } }
-  allIds: [], // Ordered category IDs
+  byId: {}, 
+  allIds: [], 
 };
 
 const categoriesSlice = createSlice({

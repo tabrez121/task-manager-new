@@ -6,7 +6,6 @@ const selectTasksState = (state) => state.tasks;
 const selectFiltersState = (state) => state.filters;
 const selectCategoriesState = (state) => state.categories;
 
-// Select all tasks as flat array
 export const selectAllTasks = createSelector(
   [selectTasksState],
   (tasks) => {

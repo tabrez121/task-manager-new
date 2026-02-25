@@ -1,13 +1,12 @@
 const PERSIST_KEY = 'task-manager-redux';
 const PERSIST_VERSION = 1;
-const THROTTLE_DELAY = 1000; // 1 second debounce
+const THROTTLE_DELAY = 1000; 
 
 let saveTimeout;
 
 const persistenceMiddleware = (storeAPI) => (next) => (action) => {
   const result = next(action);
 
-  // Throttled save to localStorage
   clearTimeout(saveTimeout);
   saveTimeout = setTimeout(() => {
     try {
@@ -19,7 +18,6 @@ const persistenceMiddleware = (storeAPI) => (next) => (action) => {
         data: {
           tasks: state.tasks,
           categories: state.categories,
-          // Note: filters are NOT persisted (transient UI state)
         },
       };
 
