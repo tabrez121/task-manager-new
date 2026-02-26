@@ -7,11 +7,13 @@ This project implements a complete task management system with all required feat
 
 # 📸 Screenshots
 ### 🏠 Home Screen (Light Mode)
-<img width="928" height="345" alt="Homepage light" src="https://github.com/user-attachments/assets/1b82c219-9ef9-44dd-84eb-ba835315db2f" />
+<img width="852" height="361" alt="light home page" src="https://github.com/user-attachments/assets/5c911344-a4ba-4c35-ba6f-db8d6eac3935" />
+
 
 
 ### 🌙 Home Screen (Dark Mode)
-<img width="866" height="359" alt="homepage dark" src="https://github.com/user-attachments/assets/25b89eda-2bb3-440f-a06f-566ae24e971f" />
+<img width="819" height="391" alt="dark home page" src="https://github.com/user-attachments/assets/1f6f1253-0ecb-4158-a3a7-fbab0621b9fb" />
+
 
 
 ### 📝 Create Task Modal (Full Details)
